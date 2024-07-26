@@ -15,15 +15,18 @@ class TestAccessNestedMap(TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2),
     ])
-    def test_access_nested_map(self, nested_dict: Mapping, path: Sequence, expected_value: Any):
-        """Test that access_nested_map returns the correct value"""
+    def test_access_nested_map(
+            self, nested_dict: Mapping, path: Sequence, expected_value: Any
+            ):
+        "Test that access_nested_map returns the correct value"""
         self.assertEqual(access_nested_map(nested_dict, path), expected_value)
 
     @parameterized.expand([
         ({}, ("a",)),
         ({"a": 1}, ("a", "b")),
     ])
-    def test_access_nested_map_exception(self, nested_dict: Mapping, path: Sequence):
+    def test_access_nested_map_exception(
+            self, nested_dict: Mapping, path: Sequence):
         """Test that access_nested_map raises a KeyError for invalid paths"""
         with self.assertRaises(KeyError):
             access_nested_map(nested_dict, path)
@@ -37,7 +40,8 @@ class TestGetJson(TestCase):
         ("http://holberton.io", {"payload": False}),
     ])
     @mock.patch("utils.requests.get")
-    def test_get_json(self, url: str, expected_response: dict, mock_get: Any) -> None:
+    def test_get_json(
+            self, url: str, expected_response: dict, mock_get: Any) -> None:
         """Test that get_json correctly fetches and returns JSON data"""
         mock_get.return_value.json.return_value = expected_response
         self.assertEqual(get_json(url), expected_response)
